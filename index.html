@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Legal Contract</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    #split-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      min-width: 0;
+    }
+
+    #left-pane, #right-pane {
+      min-width: 200px;
+      max-width: 90vw;
+      flex: 1 1 0;
+      overflow: auto;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    #left-pane {
+  position: relative;
+  overflow-y: auto;
+  max-height: 100vh;
+  font-size: 0.88em;
+}
+#right-pane {
+  flex: 0 0 70%;
+  width: 60vw;
+  min-width: 200px;
+  max-width: 90vw;
+}
+    .side {
+      flex: 1;
+      min-width: 0;
+      padding: 32px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      border-right: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .side:last-child {
+      border-right: none;
+    }
+    h2 {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-weight: 200;
+      font-size: 2em;
+      color: #000; /* Completely black */
+      margin-top: 0;
+    }
+    .questions-page {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 20px; /* Less gap between boxes */
+      justify-content: flex-start;
+      margin-bottom: 32px;
+      margin-top: 12px;
+    }
+    .question-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      width: calc(50% - 10px); /* Two columns, closer together */
+      min-width: 180px;
+      max-width: 340px;
+      flex: 1 1 180px;
+      margin-bottom: 0;
+    }
+    .question-label {
+      font-size: 1.1em;
+      color: #1e293b;
+      margin-bottom: 2px;
+      display: none; /* Hide label, use placeholder */
+    }
+    .question-input {
+      width: 100%;
+      max-width: 100%;
+      padding: 6px 10px;      /* Smaller padding */
+      font-size: 0.95em;      /* Slightly smaller font */
+      border: 1px solid #cbd5e1;
+      border-radius: 0px;
+      background: #f8fafc;
+      color: #111d2b;
+      font-family: inherit;
+      box-sizing: border-box;
+      margin-bottom: 2px;     /* Less space below */
+      height: 28px;           /* Explicitly smaller height */
+      min-height: 28px;
+    }
+    input[type="text"], input[type="email"], input[type="password"], textarea {
+  background: #fff;
+  color: #222;
+  font-size: 0.88em;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
+  border-color: #b0b0b0;
+  box-shadow: 0 2px 16px rgba(80,80,80,0.16);
+}
+
+input::placeholder, textarea::placeholder {
+  color: #aaa;
+  opacity: 1;
+}
+    .nav-arrows {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 12px;
+    }
+    .arrow-btn {
+      background: none;
+      color: #1e293b;
+      border: none;
+      border-radius: 0;
+      width: 36px;
+      height: 36px;
+      font-size: 2em;
+      cursor: pointer;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      padding: 0;
+      margin: 0 2px;
+      line-height: 1;
+    }
+    .arrow-btn:disabled {
+      color: #f3f3f3;
+      cursor: not-allowed;
+    }
+    .question-number {
+      margin-top: 12px;
+      color: #64748b;
+      font-size: 1em;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    #a4-preview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      min-height: 100vh;
+      gap: 32px;
+      contenteditable: true;
+    }
+    .a4-page {
+      background: #fff;
+      box-shadow: 0 0 8px #bbb;
+      margin: 0 auto 32px auto;
+      padding: 40pt 36pt 0pt 36pt; /* Bottom padding now 0pt for max content */
+      height: 1056px;
+      min-height: 1056px;
+      max-height: 1056px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.95em;
+      color: #222;
+      border-radius: 0px;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+      display: block;
+      text-align: left;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Limit content width to 7.7in (554pt) and center it horizontally */
+    .a4-page > * {
+      max-width: 420pt;           /* About 5.8in, much narrower than the page */
+      margin-left: 72pt;          /* 1 inch left margin */
+      margin-right: 96pt;         /* 1.33 inch right margin (was auto, now more space) */
+      box-sizing: border-box;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .a4-section-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: bold;
+      font-size: 1.08em;
+      margin: 18px 0 6px 0;
+      margin-left: 72pt;
+      letter-spacing: 1px;
+      color: #111;
+      text-decoration: none;   /* No underline */
+      border-bottom: none;     /* No line under the header */
+    }
+    .a4-field, .a4-label, .a4-page span, .a4-page li {
+      font-family: 'Times New Roman', Times, serif;
+      color: #222;
+    }
+    .a4-label {
+      color: #444;
+      font-size: 0.98em;
+      margin-right: 6px;
+
+    }
+    .a4-page ul {
+      margin-left: 24px;
+      color: #222;
+      font-size: 0.97em;
+    }
+    .a4-page li {
+      margin-left: 16px;
+      color: #222;
+    }
+    @media (max-width: 900px) {
+      .question-block {
+        width: 100%;
+        max-width: 100%;
+      }
+      .questions-page {
+        gap: 10px;
+      }
+    }
+    .questions-page > div[style*="font-weight: bold"] {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: 200;
+  font-size: 1.3em;
+  color: #000;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+#section-checkboxes > div {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 24px;
+  margin-bottom: 16px;
+}
+.a4-page,
+.a4-page * {
+  color: #000 !important;
+}
+#a4-preview:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+.a4-footer {
+  position: absolute;
+  left: 48px;
+  bottom: 18px;
+  font-size: 0.93em;
+  color: #000000 !important;
+  font-family: 'Times New Roman', Times, serif;
+  z-index: 10;
+  pointer-events: none;
+  width: calc(100% - 96px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.a4-initial-lines {
+  position: absolute;
+  left: 48px;
+  bottom: 44px;
+  display: flex;
+  gap: 32px;
+  z-index: 11;
+  pointer-events: none;
+}
+.a4-initial-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.93em;
+  color: #888;
+  font-family: 'Times New Roman', Times, serif;
+  margin-right: 0;
+}
+.a4-initial-line span {
+  display: block;
+  width: 60px;
+  border-bottom: 1.2px solid #888;
+  margin-bottom: 2px;
+  height: 12px;
+}
+.a4-content-fixed {
+  width: 420pt;         /* Match your contract content width */
+  min-height: 900px;    /* Or whatever you want for vertical space */
+  margin-left: 72pt;    /* Match contract content left margin */
+  margin-right: 96pt;   /* Match contract content right margin */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.a4-toc-list {
+  list-style: none;
+  padding-left: 0;
+  padding-right: 48px; /* For PDF centering */
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* <-- Left align list items */
+}
+
+.a4-toc-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 1.13em;
+  color: #222;
+  line-height: 1.8;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  width: 90%;
+  max-width: 100%;
+  justify-content: flex-start;
+  padding-left: 32px;
+}
+
+.toc-section-title {
+  white-space: nowrap;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.toc-dots {
+  flex: 1 1 auto;
+  border-bottom: 1px dotted #888;
+  margin: 0 10px;
+  height: 0.7em;
+  min-width: 10px;
+}
+
+.toc-page-num {
+  white-space: nowrap;
+  margin-left: 10px;
+  font-variant-numeric: tabular-nums;
+  color: #444;
+  font-size: 0.98em;
+}
+
+#floating-toolbar {
+  position: fixed;
+  top: 80px;
+  right: 48px;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  width: 48px;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+#floating-toolbar button {
+  background: none;
+  border: none;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #1e293b;
+  border-bottom: 1px solid #f3f3f3;
+  outline: none;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+#floating-toolbar button:last-child {
+  border-bottom: none;
+}
+#floating-toolbar button.active,
+#floating-toolbar button:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+}
+
+/* Add to your CSS */
+.left-pane-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: blur(16px) brightness(1.15) saturate(1.2);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.left-pane-gloss {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(120deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.18) 100%);
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+}
+
+#left-pane .left-pane-content {
+  position: relative;
+  z-index: 3;
+  padding: 32px 24px 24px 24px;
+}
+
+textarea {
+  resize: none;
+}
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: solid #f3f3f3;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  box-shadow: none; /* No outline when unchecked */
+  transition: background 0.2s;
+}
+
+input[type="checkbox"]:checked {
+  background: #222;
+  border: #000;
+  box-shadow: none;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 1.5px 1.5px 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.pagination-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.1em;
+  margin: 0 4px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 0;
+}
+
+.pagination-arrow:disabled {
+  background: #bbb;
+  color: #fff;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.pagination-arrow svg,
+.pagination-arrow i {
+  font-size: 1em;
+  width: 1em;
+  height: 1em;
+  pointer-events: none;
+}
+  </style>
+</head>
+<body style="padding:0;margin:0;">
+  <!-- Remove the entire tab bar and tab content logic. Only keep the split-container and its children. -->
+  <div id="split-container" style="display: flex; width: 100vw; height: 100vh;">
+    <div class="side" id="left-pane">
+      <h2>New Contract</h2>
+      <form id="questions-form" autocomplete="off">
+        <div id="section-checkboxes" style="margin-bottom:18px;">
+          <!-- Section checkboxes will be rendered here -->
+        </div>
+        <div class="questions-page" id="questions-page"></div>
+        <div class="question-number" id="question-number"></div>
+        <div class="nav-arrows">
+          <button type="button" class="arrow-btn" id="prev-btn" title="Previous">&lt;</button>
+          <button type="button" class="arrow-btn" id="next-btn" title="Next">&gt;</button>
+        </div>
+      </form>
+      <!-- Add this button inside your #left-pane .left-pane-content, preferably at the bottom -->
+      <button id="download-pdf-btn" style="
+        width: 100%;
+        padding: 16px 0;
+        margin-top: 24px;
+        background: #222;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.15em;
+        font-family: 'Times New Roman', Times, serif;
+        box-shadow: 0 2px 10px rgba(80,80,80,0.10);
+        cursor: pointer;
+        transition: background 0.2s;
+      ">
+        Download PDF
+      </button>
+    </div>
+    <div id="resizer"></div>
+    <div class="side" id="right-pane">
+      <div id="a4-preview" contenteditable="true"></div>
+    </div>
+  </div>
+  <!-- Keep your script and all logic below as before, but remove any tab switching code. -->
+  <script>
+    // Grouped legal contract questions by section
+    const questionSections = [
+      {
+        title: "General Information",
+        questions: [
+          "Contract Title",
+          "Effective Date",
+          "Expiration Date",
+          "Governing Law (Jurisdiction)",
+          "Governing Language",
+          "Governing Currency"
+        ]
+      },
+      {
+        title: "Parties",
+        questions: [
+          "Party A - Full Legal Name",
+          "Party A - Address",
+          "Party A - Contact Number",
+          "Party A - Email Address",
+          "Party B - Full Legal Name",
+          "Party B - Address",
+          "Party B - Contact Number",
+          "Party B - Email Address",
+          "Signatory Name (Party A)",
+          "Signatory Title (Party A)",
+          "Signatory Name (Party B)",
+          "Signatory Title (Party B)",
+          "Date of Signature (Party A)",
+          "Date of Signature (Party B)",
+          "Tax Identification Number (Party A)",
+          "Tax Identification Number (Party B)"
+        ]
+      },
+      {
+        title: "Definitions",
+        questions: [
+          "Definitions: 'Agreement'",
+          "Definitions: 'Confidential Information'",
+          "Definitions: 'Services'",
+          "Definitions: 'Term'",
+          "Definitions: 'Party'",
+          "Definitions: 'Effective Date'",
+          "Definitions: 'Intellectual Property'",
+          "Definitions: 'Deliverables'"
+        ]
+      },
+      {
+        title: "Agreement Background",
+        questions: [
+          "Recitals / Background",
+          "Purpose of Agreement",
+          "Scope of Services",
+          "Schedule 1: Description of Services",
+          "Schedule 2: Pricing",
+          "Schedule 3: Key Contacts",
+          "Schedule 4: Additional Terms",
+          "Schedule 5: Special Conditions",
+          "Annexes/Schedules List"
+        ]
+      },
+      {
+        title: "Payment & Financial",
+        questions: [
+          "Payment Terms",
+          "Payment Due Dates",
+          "Late Payment Penalties",
+          "Bank Account Details (if needed)",
+          "Expenses and Costs"
+        ]
+      },
+      {
+        title: "Confidentiality & IP",
+        questions: [
+          "Confidentiality Obligations",
+          "Non-Disclosure Period",
+          "Intellectual Property Ownership",
+          "License Grant (if any)",
+          "Data Protection Clause"
+        ]
+      },
+      {
+        title: "Restrictions & Covenants",
+        questions: [
+          "Non-Compete Clause",
+          "Non-Solicitation Clause",
+          "Publicity/Press Release Restrictions"
+        ]
+      },
+      {
+        title: "Warranties & Liability",
+        questions: [
+          "Warranties Provided",
+          "Warranty Period",
+          "Limitation of Liability",
+          "Indemnification Clause",
+          "Insurance Requirements"
+        ]
+      },
+      {
+        title: "Performance & Deliverables",
+        questions: [
+          "Deliverable Acceptance Criteria",
+          "Milestone Dates",
+          "Performance Standards",
+          "Remedies for Breach",
+          "Liquidated Damages"
+        ]
+      },
+      {
+        title: "Termination & Breach",
+        questions: [
+          "Termination Rights",
+          "Termination Notice Period",
+          "Obligations Upon Termination",
+          "Return of Materials",
+          "Notice of Breach Procedure",
+          "Cure Period for Breach",
+          "Survival of Clauses"
+        ]
+      },
+      {
+        title: "Dispute Resolution",
+        questions: [
+          "Dispute Resolution Method",
+          "Arbitration Clause",
+          "Jurisdiction for Disputes"
+        ]
+      },
+      {
+        title: "Miscellaneous",
+        questions: [
+          "Assignment Rights",
+          "Subcontracting Rights",
+          "Amendment Procedure",
+          "Entire Agreement Clause",
+          "Severability Clause",
+          "Waiver Clause",
+          "Counterparts Clause",
+          "Headings/Section Titles",
+          "Interpretation Clause",
+          "Relationship of Parties",
+          "Independent Contractor Statement",
+          "Third Party Beneficiaries",
+          "Successors and Assigns",
+          "No Partnership/Joint Venture Statement",
+          "No Agency Statement",
+          "No Waiver of Rights",
+          "Further Assurances",
+          "Execution in Counterparts",
+          "Electronic Signatures",
+          "Audit Rights",
+          "Inspection Rights",
+          "Change Order Procedure",
+          "Compliance with Laws",
+          "Time is of the Essence Clause",
+          "Other (please specify)"
+        ]
+      }
+    ];
+
+    // Add a preset text template for each section (simple example)
+    const sectionPresets = {
+      "General Information": (a) => `This Agreement ("Agreement") is titled "${a[0] || '[Contract Title]'}", effective as of ${a[1] || '[Effective Date]'}, expiring on ${a[2] || '[Expiration Date]'}, governed by the laws of ${a[3] || '[Jurisdiction]'}, in the language ${a[4] || '[Language]'} and currency ${a[5] || '[Currency]'}.`,
+      "Parties": (a) => `Party A: ${a[0] || '[A Name]'}, Address: ${a[1] || '[A Address]'}, Contact: ${a[2] || '[A Contact]'}, Email: ${a[3] || '[A Email]'}; Party B: ${a[4] || '[B Name]'}, Address: ${a[5] || '[B Address]'}, Contact: ${a[6] || '[B Contact]'}, Email: ${a[7] || '[B Email]'}.`,
+      "Definitions": (a) => `Definitions: Agreement: ${a[0] || '[Agreement]'}, Confidential Information: ${a[1] || '[Confidential Information]'}, Services: ${a[2] || '[Services]'}, Term: ${a[3] || '[Term]'}, Party: ${a[4] || '[Party]'}, Effective Date: ${a[5] || '[Effective Date]'}, Intellectual Property: ${a[6] || '[IP]'}, Deliverables: ${a[7] || '[Deliverables]'}.`,
+      "Agreement Background": (a) => `Background: ${a[0] || '[Recitals]'} Purpose: ${a[1] || '[Purpose]'} Scope: ${a[2] || '[Scope]'} Services: ${a[3] || '[Description]'} Pricing: ${a[4] || '[Pricing]'} Contacts: ${a[5] || '[Contacts]'} Additional Terms: ${a[6] || '[Additional Terms]'} Special Conditions: ${a[7] || '[Special Conditions]'} Annexes: ${a[8] || '[Annexes]'} `,
+      "Payment & Financial": (a) => `Payment Terms: ${a[0] || '[Terms]'}, Due Dates: ${a[1] || '[Due Dates]'}, Late Penalties: ${a[2] || '[Penalties]'}, Bank Details: ${a[3] || '[Bank Details]'}, Expenses: ${a[4] || '[Expenses]'}.`,
+      "Confidentiality & IP": (a) => `Confidentiality: ${a[0] || '[Obligations]'}, Non-Disclosure Period: ${a[1] || '[Period]'}, IP Ownership: ${a[2] || '[IP Ownership]'}, License: ${a[3] || '[License]'}, Data Protection: ${a[4] || '[Data Protection]'}.`,
+      "Restrictions & Covenants": (a) => `Non-Compete: ${a[0] || '[Non-Compete]'}, Non-Solicitation: ${a[1] || '[Non-Solicitation]'}, Publicity: ${a[2] || '[Publicity]'}.`,
+      "Warranties & Liability": (a) => `Warranties: ${a[0] || '[Warranties]'}, Warranty Period: ${a[1] || '[Period]'}, Liability: ${a[2] || '[Liability]'}, Indemnification: ${a[3] || '[Indemnification]'}, Insurance: ${a[4] || '[Insurance]'}.`,
+      "Performance & Deliverables": (a) => `Acceptance Criteria: ${a[0] || '[Criteria]'}, Milestones: ${a[1] || '[Milestones]'}, Performance: ${a[2] || '[Performance]'}, Remedies: ${a[3] || '[Remedies]'}, Liquidated Damages: ${a[4] || '[Damages]'}.`,
+      "Termination & Breach": (a) => `Termination: ${a[0] || '[Rights]'}, Notice: ${a[1] || '[Notice]'}, Obligations: ${a[2] || '[Obligations]'}, Return of Materials: ${a[3] || '[Return]'}, Notice of Breach: ${a[4] || '[Notice of Breach]'}, Cure Period: ${a[5] || '[Cure Period]'}, Survival: ${a[6] || '[Survival]'}.`,
+      "Dispute Resolution": (a) => `Dispute Resolution: ${a[0] || '[Method]'}, Arbitration: ${a[1] || '[Arbitration]'}, Jurisdiction: ${a[2] || '[Jurisdiction]'}.`,
+      "Miscellaneous": (a) => `Miscellaneous: ${a.map((v, i) => v ? v : '[Not filled]').join(', ')}.`
+    };
+
+    // --- Section definitions and sub-definitions ---
+    const sectionDefinitions = {
+      "General Information": {
+        text: "1. General Information. This section sets forth the basic details of the Agreement, including its title, effective and expiration dates, and the governing law, language, and currency.",
+        subs: [
+          "1.1 'Effective Date' means the date on which this Agreement becomes enforceable.",
+          "1.2 'Governing Law' refers to the jurisdiction whose laws will apply to this Agreement.",
+          "1.3 'Currency' means the monetary unit in which payments will be made."
+        ]
+      },
+      "Parties": {
+        text: "2. Parties. This section identifies the parties entering into the Agreement, including their legal names, addresses, and contact information.",
+        subs: [
+          "2.1 'Party A' and 'Party B' refer to the respective signatories to this Agreement.",
+          "2.2 'Signatory' means the authorized representative executing this Agreement on behalf of a Party."
+        ]
+      },
+      "Definitions": {
+        text: "3. Definitions. This section provides the meanings of key terms used throughout the Agreement.",
+        subs: [
+          "3.1 'Agreement' means this contract and all its schedules and annexes.",
+          "3.2 'Confidential Information' means all non-public information disclosed by either Party.",
+          "3.3 'Services' means the tasks and deliverables to be provided under this Agreement."
+        ]
+      },
+      "Agreement Background": {
+        text: "4. Agreement Background. This section describes the context, purpose, and scope of the Agreement.",
+        subs: [
+          "4.1 'Recitals' provide background and intent for entering into this Agreement.",
+          "4.2 'Scope of Services' defines the work to be performed."
+        ]
+      },
+      "Payment & Financial": {
+        text: "5. Payment & Financial. This section outlines the financial terms, including payment schedules and penalties.",
+        subs: [
+          "5.1 'Payment Terms' specify when and how payments are to be made.",
+          "5.2 'Late Payment Penalties' are charges for overdue payments."
+        ]
+      },
+      "Confidentiality & IP": {
+        text: "6. Confidentiality & Intellectual Property. This section governs the protection of confidential information and ownership of intellectual property.",
+        subs: [
+          "6.1 'Confidentiality Obligations' require Parties to protect sensitive information.",
+          "6.2 'Intellectual Property' refers to creations of the mind, such as inventions and works of authorship."
+        ]
+      },
+      "Restrictions & Covenants": {
+        text: "7. Restrictions & Covenants. This section sets forth limitations on the Parties' actions, such as non-compete and non-solicitation obligations.",
+        subs: [
+          "7.1 'Non-Compete' restricts a Party from engaging in competing activities.",
+          "7.2 'Non-Solicitation' prevents a Party from soliciting the other Party's employees or clients."
+        ]
+      },
+      "Warranties & Liability": {
+        text: "8. Warranties & Liability. This section details the guarantees provided and the extent of liability.",
+        subs: [
+          "8.1 'Warranty' is a promise regarding the quality or performance of deliverables.",
+          "8.2 'Limitation of Liability' caps the amount recoverable for damages."
+        ]
+      },
+      "Performance & Deliverables": {
+        text: "9. Performance & Deliverables. This section describes the standards and criteria for deliverables and performance.",
+        subs: [
+          "9.1 'Acceptance Criteria' are the conditions that must be met for deliverables to be accepted.",
+          "9.2 'Milestones' are significant points or events in the project timeline."
+        ]
+      },
+      "Termination & Breach": {
+        text: "10. Termination & Breach. This section explains the rights and procedures for ending the Agreement and handling breaches.",
+        subs: [
+          "10.1 'Termination Notice' is the formal communication required to end the Agreement.",
+          "10.2 'Cure Period' is the time allowed to remedy a breach."
+        ]
+      },
+      "Dispute Resolution": {
+        text: "11. Dispute Resolution. This section sets out the process for resolving disagreements between the Parties.",
+        subs: [
+          "11.1 'Arbitration' is a method of resolving disputes outside of court.",
+          "11.2 'Jurisdiction' refers to the court or authority that will hear disputes."
+        ]
+      },
+      "Miscellaneous": {
+        text: "12. Miscellaneous. This section includes various standard provisions that support the interpretation and enforcement of the Agreement.",
+        subs: [
+          "12.1 'Entire Agreement' means this document contains all terms agreed by the Parties.",
+          "12.2 'Severability' ensures that if one part is invalid, the rest remains effective.",
+          "12.3 'Amendment' describes how changes to the Agreement must be made."
+        ]
+      }
+    };
+
+    // Flatten for answer storage and page calculation
+    const questions = questionSections.flatMap(s => s.questions);
+    const QUESTIONS_PER_PAGE = Math.ceil(questions.length / 6);
+    const TOTAL_PAGES = 6;
+    let currentPage = 0;
+    const answers = Array(questions.length).fill("");
+    // Section checkbox state
+    const sectionActive = questionSections.map(() => true);
+
+    const questionsPage = document.getElementById('questions-page');
+    const questionNumber = document.getElementById('question-number');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const form = document.getElementById('questions-form');
+    const sectionCheckboxes = document.getElementById('section-checkboxes');
+
+    // Render section checkboxes
+    function renderSectionCheckboxes() {
+      sectionCheckboxes.innerHTML = '';
+      // Add header above the checkboxes
+      const header = document.createElement('div');
+      header.textContent = "Select Sections";
+      header.style.fontFamily = "'Segoe UI', Arial, sans-serif";
+      header.style.fontWeight = "200";
+      header.style.fontSize = "1.3em";
+      header.style.color = "#000";
+      header.style.marginTop = "24px";
+      header.style.marginBottom = "8px";
+      header.style.letterSpacing = "1px";
+      sectionCheckboxes.appendChild(header);
+
+      // Responsive grid for checkboxes
+      const grid = document.createElement('div');
+      sectionCheckboxes.appendChild(grid);
+
+      questionSections.forEach((section, idx) => {
+        const row = document.createElement('label');
+        row.style.display = "flex";
+        row.style.alignItems = "center";
+        row.style.fontWeight = "normal";
+        row.style.fontSize = "1em";
+        row.style.cursor = "pointer";
+        row.style.gap = "8px";
+        row.style.userSelect = "none";
+        row.style.whiteSpace = "nowrap";
+
+        const cb = document.createElement('input');
+        cb.type = "checkbox";
+        cb.checked = idx === 0; // Only General Information checked by default
+        sectionActive[idx] = cb.checked;
+        cb.style.margin = "0 6px 0 0";
+        cb.style.borderRadius = "0px"; // <-- Make checkbox square
+        cb.addEventListener('change', () => {
+          sectionActive[idx] = cb.checked;
+          renderPage(currentPage);
+          renderA4Preview();
+        });
+
+        row.appendChild(cb);
+        row.appendChild(document.createTextNode(section.title));
+        grid.appendChild(row);
+      });
+    }
+
+    function renderPage(pageIdx) {
+      questionsPage.innerHTML = "";
+      const start = pageIdx * QUESTIONS_PER_PAGE;
+      const end = Math.min(start + QUESTIONS_PER_PAGE, questions.length);
+
+      // Find which sections are on this page
+      let qIdx = 0, sectionIdx = 0, sectionStart = 0;
+      while (sectionIdx < questionSections.length && sectionStart + questionSections[sectionIdx].questions.length <= start) {
+        sectionStart += questionSections[sectionIdx].questions.length;
+        sectionIdx++;
+      }
+
+      let rendered = 0;
+      while (rendered < (end - start) && sectionIdx < questionSections.length) {
+        const section = questionSections[sectionIdx];
+        // Skip section if not active (checkbox unchecked)
+        if (!sectionActive[sectionIdx]) {
+          sectionStart += section.questions.length;
+          qIdx += section.questions.length;
+          sectionIdx++;
+          continue;
+        }
+        // Section start and end in global questions array
+        const secStart = sectionStart;
+        const secEnd = sectionStart + section.questions.length;
+        // If any questions from this section are on this page, render section header
+        const pageSecStart = Math.max(start, secStart);
+        const pageSecEnd = Math.min(end, secEnd);
+        if (pageSecStart < pageSecEnd) {
+          // Section header
+          const header = document.createElement('div');
+          header.style.width = "100%";
+          header.style.fontWeight = "bold";
+          header.style.fontSize = "1.1em";
+          header.style.margin = "18px 0 6px 0";
+          header.style.letterSpacing = "1px";
+          header.style.fontFamily = "'Segoe UI', Arial, sans-serif";
+          header.style.fontWeight = "200";
+          header.style.fontSize = "1.3em";
+          header.style.color = "#000";
+          header.textContent = section.title;
+          questionsPage.appendChild(header);
+
+          // Special case: Contract Title input for General Information
+          if (section.title === "General Information") {
+            const titleBlock = document.createElement('div');
+            titleBlock.className = "question-block";
+            const titleInput = document.createElement('input');
+            titleInput.className = "question-input";
+            titleInput.type = "text";
+            titleInput.value = answers[0] || "";
+            titleInput.placeholder = "Contract Title";
+            titleInput.addEventListener('input', e => {
+              answers[0] = e.target.value;
+              renderA4Preview();
+            });
+            titleBlock.appendChild(titleInput);
+            questionsPage.appendChild(titleBlock);
+            rendered++;
+            // Start from 1 for the rest of General Information questions
+            for (let i = pageSecStart + 1; i < pageSecEnd; i++) {
+              const block = document.createElement('div');
+              block.className = "question-block";
+              const input = document.createElement('input');
+              input.className = "question-input";
+              input.type = "text";
+              input.id = `q${i}`;
+              input.value = answers[i];
+              input.placeholder = questions[i];
+              input.addEventListener('input', e => {
+                answers[i] = e.target.value;
+                renderA4Preview();
+              });
+              block.appendChild(input);
+              questionsPage.appendChild(block);
+              rendered++;
+            }
+          } else {
+            // Section questions
+            for (let i = pageSecStart; i < pageSecEnd; i++) {
+              const block = document.createElement('div');
+              block.className = "question-block";
+              const input = document.createElement('input');
+              input.className = "question-input";
+              input.type = "text";
+              input.id = `q${i}`;
+              input.value = answers[i];
+              input.placeholder = questions[i];
+              input.addEventListener('input', e => {
+                answers[i] = e.target.value;
+                renderA4Preview();
+              });
+              block.appendChild(input);
+              questionsPage.appendChild(block);
+              rendered++;
+            }
+          }
+        }
+        sectionStart += section.questions.length;
+        qIdx += section.questions.length;
+        sectionIdx++;
+      }
+
+      questionNumber.textContent = `Page ${pageIdx + 1} of ${TOTAL_PAGES}`;
+      prevBtn.disabled = pageIdx === 0;
+      nextBtn.disabled = pageIdx === TOTAL_PAGES - 1;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 0) {
+        saveInputs();
+        currentPage--;
+        renderPage(currentPage);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < TOTAL_PAGES - 1) {
+        saveInputs();
+        currentPage++;
+        renderPage(currentPage);
+      }
+    });
+
+    function saveInputs() {
+      const inputs = questionsPage.querySelectorAll('.question-input');
+      const start = currentPage * QUESTIONS_PER_PAGE;
+      let idx = 0;
+      for (let i = start; i < start + inputs.length; i++) {
+        answers[i] = inputs[idx++].value;
+      }
+    }
+
+    form.addEventListener('submit', e => e.preventDefault());
+
+    // --- A4 Preview Script (replace your renderA4Preview function with this) ---
+    let introPageData = {
+  companyName: '',
+  companyAddress: '',
+  contractFor: '',
+  project: '',
+  issuedTo: '',
+  date: '',
+  imageDataUrl: ''
+};
+
+function renderIntroPageForm() {
+  const leftPane = document.getElementById('left-pane');
+  if (!leftPane) return;
+  // Prevent duplicate forms
+  if (document.getElementById('intro-page-form')) return;
+  const formDiv = document.createElement('div');
+  formDiv.id = 'intro-page-form';
+  formDiv.style.marginBottom = "32px";
+  formDiv.innerHTML = `
+    <h3 style="font-size:1.1em;margin-bottom:8px;">Introductory Page</h3>
+    <input type="text" placeholder="Company Name" style="width:100%;margin-bottom:6px;" value="${introPageData.companyName}">
+    <input type="text" placeholder="Company Address" style="width:100%;margin-bottom:6px;" value="${introPageData.companyAddress}">
+    <input type="text" placeholder="Contract For" style="width:100%;margin-bottom:6px;" value="${introPageData.contractFor}">
+    <input type="text" placeholder="Project" style="width:100%;margin-bottom:6px;" value="${introPageData.project}">
+    <input type="text" placeholder="Issued To" style="width:100%;margin-bottom:6px;" value="${introPageData.issuedTo}">
+    <input type="text" placeholder="Date" style="width:100%;margin-bottom:6px;" value="${introPageData.date}">
+    <label style="font-size:0.97em;margin-top:8px;display:block;">Add Image (optional):</label>
+    <input type="file" accept="image/*" id="intro-image-upload" style="margin-bottom:10px;">
+    <div id="intro-image-preview" style="margin-top:6px;"></div>
+  `;
+  leftPane.insertBefore(formDiv, leftPane.firstChild);
+
+  // Add listeners for inputs
+  const inputs = formDiv.querySelectorAll('input[type="text"]');
+  const keys = ['companyName', 'companyAddress', 'contractFor', 'project', 'issuedTo', 'date'];
+  inputs.forEach((input, idx) => {
+    input.addEventListener('input', e => {
+      introPageData[keys[idx]] = e.target.value;
+      renderA4Preview();
+    });
+  });
+  // Image upload
+  const imgInput = formDiv.querySelector('#intro-image-upload');
+  imgInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        introPageData.imageDataUrl = evt.target.result;
+        renderA4Preview();
+        formDiv.querySelector('#intro-image-preview').innerHTML = `<img src="${evt.target.result}" style="max-width:100px;max-height:60px;display:block;margin-top:4px;">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+  // Show preview if already set
+  if (introPageData.imageDataUrl) {
+    formDiv.querySelector('#intro-image-preview').innerHTML = `<img src="${introPageData.imageDataUrl}" style="max-width:100px;max-height:60px;display:block;margin-top:4px;">`;
+  }
+}
+
+    function renderA4Preview() {
+      const preview = document.getElementById('a4-preview');
+      preview.innerHTML = '';
+
+      // For measuring, create a hidden container
+      const tempDiv = document.createElement('div');
+      tempDiv.style.position = 'absolute';
+      tempDiv.style.visibility = 'hidden';
+      tempDiv.style.width = '816px';
+      tempDiv.style.fontFamily = "'Times New Roman',serif";
+      tempDiv.style.fontSize = '0.95em';
+      tempDiv.style.lineHeight = '1.6';
+      tempDiv.style.padding = '53px 48px 0px 48px';
+      tempDiv.style.boxSizing = 'border-box';
+      document.body.appendChild(tempDiv);
+
+      const A4_HEIGHT = 1056 - 53 - 0; // 1003px usable content height
+
+      let qIdx = 0;
+      let pages = [];
+      let currentPageHtml = '';
+      let currentPageHeight = 0;
+      let sectionNumber = 1;
+
+      // --- Introductory Page (Page 1, no footer, no initials) ---
+      let introHtml = `
+  <div class="a4-page">
+    <div class="a4-content-fixed">
+      ${introPageData.imageDataUrl ? `<img src="${introPageData.imageDataUrl}" style="max-width:180px;max-height:90px;margin-bottom:18px;">` : ''}
+      <div style="font-size:2.1em;font-family:'Times New Roman',serif;font-weight:bold;letter-spacing:1px;color:#000;text-align:center;margin-bottom:8px;">
+        ${introPageData.companyName || '[Company Name]'}
+      </div>
+      <div style="font-size:1.1em;color:#444;text-align:center;margin-bottom:32px;">
+        ${introPageData.companyAddress || '[Company Address]'}
+      </div>
+      <div style="height:32px;"></div>
+      <div style="width:100%;">
+        <div style="font-size:1.13em;font-weight:bold;margin-bottom:18px;">Contract Details</div>
+        <div style="margin-bottom:8px;"><b>Contract For:</b> ${introPageData.contractFor || '[Contract For]'}</div>
+        <div style="margin-bottom:8px;"><b>Project:</b> ${introPageData.project || '[Project]'}</div>
+        <div style="margin-bottom:8px;"><b>Issued To:</b> ${introPageData.issuedTo || '[Issued To]'}</div>
+        <div style="margin-bottom:8px;"><b>Date:</b> ${introPageData.date || '[Date]'}</div>
+      </div>
+    </div>
+  </div>
+`;
+      pages.push(introHtml);
+
+      // --- Table of Contents Page (Page 2, no footer, no initials) ---
+      // Build TOC from active sections
+      let tocHtml = `
+  <div class="a4-page">
+    <div class="a4-content-fixed">
+      <div style="font-size:2em;font-family:'Times New Roman',serif;font-weight:bold;letter-spacing:1px;color:#000;text-align:center;margin-bottom:32px;">
+        Table of Contents
+      </div>
+      <div style="width:100%;">
+        <ul class="a4-toc-list">
+          ${questionSections
+            .map((section, idx) =>
+              sectionActive[idx]
+                ? `<li>
+                      <span class="toc-section-title">${section.title}</span>
+                      <span class="toc-dots"></span>
+                      <span class="toc-page-num">Page ${idx + 1}</span>
+                   </li>`
+                : ''
+            )
+              .join('')
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+`;
+      pages.push(tocHtml);
+
+      // --- Now continue with your existing logic for contract pages ---
+      let contractPages = [];
+      let contractCurrentPageHtml = '';
+      let contractCurrentPageHeight = 0;
+      let contractSectionNumber = 1;
+      let contractQIdx = 0;
+
+      // --- Add Document Title (now on contract page 1, which is pages[2]) ---
+      let docTitle = `<div style="text-align:center;margin-bottom:32px;">
+  <span style="font-size:1.38em;font-family:'Times New Roman',serif;font-weight:bold;letter-spacing:1px;color:#000;display:inline-block;">
+    Part 1
+  </span>
+</div>`;
+
+      tempDiv.innerHTML = docTitle;
+      let titleHeight = tempDiv.offsetHeight;
+      contractCurrentPageHtml += docTitle;
+      contractCurrentPageHeight += titleHeight;
+
+      questionSections.forEach((section, sidx) => {
+        if (!sectionActive[sidx]) { contractQIdx += section.questions.length; return; }
+
+        // Section header
+        let sectionHeaderHtml = '';
+        const def = sectionDefinitions[section.title];
+        if (def) {
+          sectionHeaderHtml += `<div class="a4-section-title" style="text-align:left;justify-content:flex-start;align-items:flex-start;display:block;">${section.title}</div>`;
+          sectionHeaderHtml += `<div style="margin-bottom:6px; color:#444; font-size:0.99em; text-align:left; margin-left:72pt;">${contractSectionNumber}. ${def.text.replace(/^\d+\.\s*/, '')}</div>`;
+          if (def.subs && def.subs.length) {
+            sectionHeaderHtml += `<div style="margin:0 0 10px 48px; color:#555; font-size:0.97em;">`;
+            def.subs.forEach((sub, subIdx) => {
+              const subNum = `${contractSectionNumber}.${subIdx + 1}`;
+              sectionHeaderHtml += `<div style="margin-left:72pt; display:block; text-align:left;">${sub.replace(/^\d+\.\d+\s*/, `${subNum} `)}</div>`;
+            });
+            sectionHeaderHtml += `</div>`;
+          }
+        } else {
+          sectionHeaderHtml += `<div class="a4-section-title" style="text-align:left;justify-content:flex-start;align-items:flex-start;display:block;">${section.title}</div>`;
+        }
+
+        // Add section header (always keep header together)
+        tempDiv.innerHTML = sectionHeaderHtml;
+        const headerHeight = tempDiv.offsetHeight;
+        if (contractCurrentPageHtml && (contractCurrentPageHeight + headerHeight > A4_HEIGHT)) {
+          contractPages.push(contractCurrentPageHtml);
+          contractCurrentPageHtml = '';
+          contractCurrentPageHeight = 0;
+        }
+        contractCurrentPageHtml += sectionHeaderHtml;
+        contractCurrentPageHeight += headerHeight;
+
+        // Now add each field/paragraph one by one, splitting as needed
+        if (sectionPresets[section.title]) {
+          const vals = answers.slice(contractQIdx, contractQIdx + section.questions.length);
+          const fieldHtml = `<div class="a4-field" style="margin-left:72pt;">${sectionPresets[section.title](vals)}</div>`;
+          tempDiv.innerHTML = fieldHtml;
+          const fieldHeight = tempDiv.offsetHeight;
+          if (contractCurrentPageHtml && (contractCurrentPageHeight + fieldHeight > A4_HEIGHT)) {
+            contractPages.push(contractCurrentPageHtml);
+            contractCurrentPageHtml = '';
+            contractCurrentPageHeight = 0;
+          }
+          contractCurrentPageHtml += fieldHtml;
+          contractCurrentPageHeight += fieldHeight;
+        } else {
+          section.questions.forEach((q, i) => {
+            const val = answers[contractQIdx + i] || '';
+            const fieldHtml = `<div class="a4-field" style="margin-left:72pt;"><span class="a4-label">${q}:</span>${val ? `<span>${val}</span>` : `<span style="color:#bbb;">[Not filled]</span>`}</div>`;
+            tempDiv.innerHTML = fieldHtml;
+            const fieldHeight = tempDiv.offsetHeight;
+            if (contractCurrentPageHtml && (contractCurrentPageHeight + fieldHeight > A4_HEIGHT)) {
+              contractPages.push(contractCurrentPageHtml);
+              contractCurrentPageHtml = '';
+              contractCurrentPageHeight = 0;
+            }
+            contractCurrentPageHtml += fieldHtml;
+            contractCurrentPageHeight += fieldHeight;
+          });
+        }
+        contractQIdx += section.questions.length;
+        contractSectionNumber++;
+      });
+
+      // Push the last contract page
+      if (contractCurrentPageHtml.trim() !== '') {
+        contractPages.push(contractCurrentPageHtml);
+      }
+      document.body.removeChild(tempDiv);
+
+      // Merge all pages: intro, TOC, contract pages
+      pages = pages.concat(contractPages);
+
+      // Render all pages
+      preview.innerHTML = pages.map((pageHtml, idx) => {
+        // For the first two pages, just use the HTML as-is (already wrapped in .a4-page)
+        if (idx === 0 || idx === 1) {
+          return pageHtml;
+        }
+        // For contract pages, use your existing footer/initials logic
+        return `<div class="a4-page">
+      ${pageHtml}
+      <div class="a4-footer">
+        <div style="width:100%; display:flex; align-items:flex-end; justify-content:space-between; position:relative;">
+          <div style="display:flex; flex-direction:column; align-items:flex-start;">
+            <div style="font-size:0.93em; color:#000;">Page ${idx - 1} of ${pages.length - 2}</div>
+            <div style="margin-top:2px; font-size:0.91em; color:#888;">Law Code: LC-2025-001</div>
+          </div>
+          <div style="position:absolute; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center;">
+            <div class="a4-initial-line"><span></span>Initials</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center;">
+            <div class="a4-initial-line"><span></span>Initials</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+      }).join('');
+      preview.setAttribute('contenteditable', 'true');
+    }
+
+    // Update preview on input and checkbox change
+    function attachPreviewListeners() {
+      document.getElementById('questions-form').addEventListener('input', renderA4Preview);
+    }
+    renderSectionCheckboxes();
+    attachPreviewListeners();
+    renderPage(currentPage);
+    renderA4Preview();
+
+    // PDF download functionality using html2pdf.js
+    document.getElementById('download-pdf-btn').addEventListener('click', function () {
+  const preview = document.getElementById('a4-preview');
+  if (!preview.innerHTML.trim()) return;
+
+  // Clone the current edited preview for export
+  const pdfContainer = document.createElement('div');
+  pdfContainer.style.background = '#fff';
+  // Copy all .a4-page children (preserves user edits)
+  preview.querySelectorAll('.a4-page').forEach(page => {
+    const clone = page.cloneNode(true);
+    clone.style.margin = '0 auto';
+    clone.style.boxShadow = 'none';
+    pdfContainer.appendChild(clone);
+  });
+
+  html2pdf()
+    .set({
+      margin: 0,
+      filename: 'contract-preview.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 4, useCORS: true },
+      jsPDF: { unit: 'pt', format: 'letter', orientation: 'portrait' }
+    })
+    .from(pdfContainer)
+    .save();
+});
+
+    // Load html2pdf.js library if not already loaded
+    if (!window.html2pdf) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      document.head.appendChild(script);
+    }
+
+    // Resizable panes logic
+const resizer = document.getElementById('resizer');
+const leftPane = document.getElementById('left-pane');
+const rightPane = document.getElementById('right-pane');
+let isResizing = false;
+
+resizer.addEventListener('mousedown', function(e) {
+  isResizing = true;
+  document.body.style.cursor = 'col-resize';
+});
+
+document.addEventListener('mousemove', function(e) {
+  if (!isResizing) return;
+  const containerOffsetLeft = document.getElementById('split-container').offsetLeft;
+  let pointerRelativeXpos = e.clientX - containerOffsetLeft;
+  // Set min/max widths
+  const minWidth = 200;
+  const maxWidth = window.innerWidth - minWidth;
+  if (pointerRelativeXpos < minWidth) pointerRelativeXpos = minWidth;
+  if (pointerRelativeXpos > maxWidth) pointerRelativeXpos = maxWidth;
+  leftPane.style.flex = 'none';
+  leftPane.style.width = pointerRelativeXpos + 'px';
+  rightPane.style.flex = '1 1 0';
+});
+
+document.addEventListener('mouseup', function() {
+  if (isResizing) {
+    isResizing = false;
+    document.body.style.cursor = '';
+  }
+});
+
+// In your renderIntroPageForm or left pane setup, add this logic:
+function renderLeftPaneBackground() {
+  const leftPane = document.getElementById('left-pane');
+  if (!leftPane) return;
+
+  // Remove old bg if present
+  const oldBg = leftPane.querySelector('.left-pane-bg');
+  if (oldBg) oldBg.remove();
+  const oldGloss = leftPane.querySelector('.left-pane-gloss');
+  if (oldGloss) oldGloss.remove();
+
+  if (introPageData.imageDataUrl) {
+    const img = document.createElement('img');
+    img.src = introPageData.imageDataUrl;
+    img.className = 'left-pane-bg';
+    leftPane.prepend(img);
+
+    const gloss = document.createElement('div');
+    gloss.className = 'left-pane-gloss';
+    leftPane.prepend(gloss);
+  }
+}
+
+// Call renderLeftPaneBackground() whenever a new image is uploaded or removed
+
+// Wrap your questions/checkboxes in a container:
+const contentDiv = document.createElement('div');
+contentDiv.className = 'left-pane-content';
+// ...append your form, checkboxes, etc. to contentDiv...
+leftPane.appendChild(contentDiv);
+
+  </script>
+</body>
+</html>
